@@ -25,6 +25,7 @@ R2 = Pin(13, Pin.OUT)#D7
 R3 = Pin(14, Pin.OUT)#D5
 R4 = Pin(15, Pin.OUT)#D8
 tick_count=1
+wifi_count=1
 wifiled_flag=0
 inchksw=1
 R1 = Pin(12, Pin.OUT)#D6

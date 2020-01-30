@@ -41,7 +41,7 @@ def tick(t):
         print("reload jsysoam files ...")
     if (tick_count%xx)==0:
         webssdset.diylib.syspam["GETTIME"]=now()
-        webssdset.diylib.sysgpio["F1"]["DAT"],webssdset.diylib.sysgpio["F2"]["DAT"] =  getdht22()
+        webssdset.diylib.sysgpio["F1"]["DAT"],webssdset.diylib.sysgpio["F2"]["DAT"] =  getdht11()
         if webssdset.diylib.sysgpio["F1"]["DAT"]<100:
             send_data(webssdset.diylib.syspam["GETTIME"],webssdset.diylib.sysgpio["F1"]["DAT"],webssdset.diylib.sysgpio["F2"]["DAT"])
         else:
@@ -127,7 +127,7 @@ def now():
     Y,M,D,H,m,S,ms,W=time.localtime(utc_epoch + 28800)#add 8hr for Taiwan time
     t="%s%s%s-%02d:%02d:%02d"%(Y,M,D,H,m,S)
     return t
-def getdht22():
+def getdht11():
     try:
         webssdset.diylib.d.measure()
         temp = webssdset.diylib.d.temperature()+tmoffsetdat

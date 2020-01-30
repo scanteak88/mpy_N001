@@ -15,6 +15,7 @@ rhoffsetdat=0
 chksw = Pin(16, Pin.IN)#D0
 #DRVR4=webssdset.diylib.DRVR4#D8
 tick_count=webssdset.diylib.tick_count
+wifi_count=webssdset.diylib.wifi_count
 wifiled_flag=webssdset.diylib.wifiled_flag
 inchksw=webssdset.diylib.inchksw
 wifiled=webssdset.diylib.wifiled
@@ -40,7 +41,7 @@ def tick(t):
         print("reload jsysoam files ...")
     if (tick_count%xx)==0:
         webssdset.diylib.syspam["GETTIME"]=now()
-        webssdset.diylib.sysgpio["F1"]["DAT"],webssdset.diylib.sysgpio["F2"]["DAT"] =  getdht11()
+        webssdset.diylib.sysgpio["F1"]["DAT"],webssdset.diylib.sysgpio["F2"]["DAT"] =  getdht22()
         if webssdset.diylib.sysgpio["F1"]["DAT"]<100:
             send_data(webssdset.diylib.syspam["GETTIME"],webssdset.diylib.sysgpio["F1"]["DAT"],webssdset.diylib.sysgpio["F2"]["DAT"])
         else:
@@ -93,7 +94,9 @@ def do_connect():
             wifiled_flag=3
             print('Network connected!')
 def send_data(dattime,dattm,datrh):
+    global wifi_count,wifiled_flag
     if sta.isconnected():
+        wifi_count=0
         wifiled_flag=3
         print('Sending data...')
         #url='%s&field1=%s&field2=%s&field3=%s' %(config.URL, dattime, dattm, datrh)
@@ -113,8 +116,12 @@ def send_data(dattime,dattm,datrh):
         except:
             print("wifi week link ...")
     else:
+        wifi_count=wifi_count+1
+        print('wifi off link send data Fail...',wifi_count)
+        if wifi_count>5:
+            wifi_count=0
+            machine.reset()
         wifiled_flag=2
-        print('wifi off link send data Fail...')
 def now():
     utc_epoch=time.mktime(time.localtime())
     Y,M,D,H,m,S,ms,W=time.localtime(utc_epoch + 28800)#add 8hr for Taiwan time
