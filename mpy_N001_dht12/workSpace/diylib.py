@@ -9,6 +9,7 @@ import socket
 import time
 import ujson
 import gc
+import dht12
 gc.collect()
 
 WAIT_FOR_CONNECT=10
@@ -18,14 +19,16 @@ tim = Timer(-1)
 tmoffsetdat=0
 rhoffsetdat=0
 chksw = Pin(16, Pin.IN)#D0
-d = dht.DHT12(Pin(0))#D3
+#d = dht.DHT22(Pin(0))#D3
+#d = GETBH1750.getds18x20()#D3
+#lux = GETBH1750.getlux()
 wifiled = Pin(2, Pin.OUT)#D4
 R1 = Pin(12, Pin.OUT)#D6
 R2 = Pin(13, Pin.OUT)#D7
 R3 = Pin(14, Pin.OUT)#D5
 R4 = Pin(15, Pin.OUT)#D8
 tick_count=1
-wifi_count=1
+wifi_count=0
 wifiled_flag=0
 inchksw=1
 R1 = Pin(12, Pin.OUT)#D6
@@ -60,6 +63,7 @@ gpiohtml="""<!DOCTYPE html><html><head><title>ESP8266 Pins</title></head>
 <body><h1>ESP8266 Pins</h1><table border="1"><tr><th>Pin</th><th>Value</th><th>Action</th></tr>%s</table>
 </body></html>
 """
+
 def loadjpam(jfilename):
     file = open(jfilename,"r")
     jobj = ujson.loads(file.read())
@@ -83,3 +87,7 @@ def chkurl(ss):
     return ss2
 if __name__ == '__main__':
     pass
+
+
+
+

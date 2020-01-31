@@ -129,15 +129,15 @@ def now():
     return t
 def getdht12():
     try:
-        webssdset.diylib.d.measure()
-        temp = webssdset.diylib.d.temperature()+tmoffsetdat
-        hum = webssdset.diylib.d.humidity()+rhoffsetdat
+        temp,hum = webssdset.diylib.dht12.getdht12()
     except:
         temp=100
         hum=100
-    print('Humidity: {}%'.format(hum))
-    print('Temperature: {}{}C'.format(temp, '\u00b0'))
-    return temp,hum
+    ftemp=float(temp)
+    fhum=float(hum)
+    print('Temperature: {}{}C'.format(ftemp, '\u00b0'))
+    print('Humidity: {}%'.format(fhum))
+    return ftemp,fhum
 def reqcommm(recomm):
     ss=recomm.split('\n')
     jcmd ="pass ..."
@@ -225,4 +225,8 @@ def main():
         pass
 if __name__ == '__main__':
     main()
+
+
+
+
 
